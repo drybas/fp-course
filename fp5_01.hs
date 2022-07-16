@@ -1,4 +1,5 @@
 import Control.Monad.State (Functor)
+import Data.Char(toUpper)
 
 data Point3D a = Point3D a a a deriving Show
 
@@ -19,3 +20,12 @@ instance Functor Tree where
     fmap f (Leaf Nothing) = Leaf Nothing
     fmap f (Branch l (Just a) r) = Branch (fmap f l) (Just $ f a) (fmap f r) 
     fmap f (Branch l Nothing  r) = Branch (fmap f l) Nothing (fmap f r) 
+
+data Entry k1 k2 v = Entry (k1, k2) v  deriving Show
+data Map k1 k2 v = Map [Entry k1 k2 v]  deriving Show
+
+instance Functor (Entry k1 k2) where
+    fmap f (Entry (k1, k2) v) = Entry (k1, k2) (f v)
+
+instance Functor (Map k1 k2) where
+    fmap f (Map x) = Map (map (fmap f) x)

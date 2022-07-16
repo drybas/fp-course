@@ -29,14 +29,24 @@ returnLog :: a -> Log a
 returnLog a = Log [] a
 
 add1Log = toLogger (+1) "added one"
+mul3Log = toLogger (*3) "multiple three"
 
 
-
+-- Execution 
 -- Log ["nothing done yet"] 0 `bindLog` add1Log
 
+{-- three laws enforced --}
 bindLog :: Log a -> (a -> Log b) -> Log b
 bindLog (Log x a) f = let (Log z r) = f a
               in Log (x ++ z) r 
+
+
+{-- two laws violated --}
+
+{-- bindLog :: Log a -> (a -> Log b) -> Log b
+bindLog (Log x a) f = let (Log z r) = f a
+              in Log (z ++ x ++ z) r 
+--}
 
 instance Monad Log where
     return = returnLog
