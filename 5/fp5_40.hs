@@ -14,6 +14,7 @@ asToken x | all isDigit x = Just (Number $ read x)
 
 --    toInt = fst . foldl (\(r, p) x -> (r + (digitToInt(x) * p), p * 10)) (0, 1) . reverse 
 
+
 tokenize :: String -> Maybe [Token]
 tokenize = conv . map asToken . words
     where 
@@ -24,7 +25,8 @@ tokenize = conv . map asToken . words
             return (x:xs) 
 
 tokenize' :: String -> Maybe [Token]
-tokenize' s = sequence $ map asToken $ words s
+tokenize' = sequence $ asToken . words
 
--- Input example: 
--- tokenize "1 + ( 7 - 2 )"
+
+
+
