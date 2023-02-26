@@ -55,11 +55,7 @@ localTest = do
     count2  <- local (("Mike", "12k4"):) usersCount
     return (count1, count2)
 
-findBadPwd :: Reader UserTable [User]
-findBadPwd = asks (fmap fst . filter (\x -> snd x == "123456"))
+usersWithBadPasswords :: Reader UserTable [User]
+usersWith = asks (fmap fst . filter (\x -> snd x == "123456"))
 
---asks (fmap (fst . filter (\x -> snd x == "123456")))
---usersWithBadPasswords :: Reader UserTable [User]
---usersWithBadPasswords = Reader   
---    count1  <- usersCount 
---    return (count1, count2)
+usersWithBadPasswords = asks (map fst . filter ((==) "123456" . snd))
